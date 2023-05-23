@@ -14,14 +14,15 @@ public static class DataSerializer
         return JsonSerializer.Deserialize<T>(jsonString);
     }
 
-    public static void JsonSerializeAsync<T>(Stream utf8Json, T value)
+    public static Task JsonSerializeAsync<T>(Stream utf8Json, T value)
     {
-        JsonSerializer.SerializeAsync(utf8Json, value);
+        return JsonSerializer.SerializeAsync(utf8Json, value);
     }
-    public static void JsonDeserializeAsync<T>(Stream utf8Json)
+    public static ValueTask<T> JsonDeserializeAsync<T>(Stream utf8Json)
     {
-        JsonSerializer.DeserializeAsync<T>(utf8Json);
+        return JsonSerializer.DeserializeAsync<T>(utf8Json);
     }
+
     public static string XmlSerialize<T>(T data)
     {
         var serializer = new XmlSerializer(typeof(T));
@@ -31,7 +32,6 @@ public static class DataSerializer
             return writer.ToString();
         }
     }
-
     public static T XmlDeserialize<T>(string xmlString)
     {
         var serializer = new XmlSerializer(typeof(T));
